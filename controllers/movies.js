@@ -16,7 +16,7 @@ module.exports.createMovie = (req, res, next) => {
   const { trailer } = req.body;
   const { _id } = req.user;
 
-  Movie.create({ country,
+  Movie.create({
     ...req.body,
     trailerLink: trailer,
     owner: _id,
@@ -41,7 +41,7 @@ module.exports.deleteMovie = (req, res, next) => {
         throw new Error403(ERR_403);
       }
 
-      return Card.findByIdAndRemove(req.params.movieId).select(['-createdAt']);
+      return Movie.findByIdAndRemove(req.params.movieId).select(['-createdAt']);
     })
     .then((card) => res.send(card))
     .catch((err) => {
