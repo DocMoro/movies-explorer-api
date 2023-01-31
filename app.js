@@ -9,6 +9,7 @@ const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const limiter = require('./middlewares/limiter');
 
 const Error404 = require('./errors/error-404');
 
@@ -23,6 +24,7 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
 
 app.use(cors);
 app.use(requestLogger);
+app.use(limiter);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
