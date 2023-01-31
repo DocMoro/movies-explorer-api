@@ -13,7 +13,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const Error404 = require('./errors/error-404');
 
-const { ERR_500, ERR_404, URL } = require('./utils/constants');
+const { ERR_500, ERR_404 } = require('./utils/constants');
 
 const app = express();
 app.use(bobeParser.json());
