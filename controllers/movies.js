@@ -8,7 +8,7 @@ const { ERR_404, ERR_400, ERR_403 } = require('../utils/constants');
 
 module.exports.getMovies = (req, res, next) => {
   Movie.find({}).select(['-createdAt'])
-    .then((card) => res.send(card))
+    .then((movie) => res.send(movie))
     .catch(next);
 };
 
@@ -20,7 +20,7 @@ module.exports.createMovie = (req, res, next) => {
     ...req.body,
     trailerLink: trailer,
     owner: _id,
-  }).then((card) => res.send(card))
+  }).then((movie) => res.send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return next(new Error400(ERR_400));
@@ -32,18 +32,18 @@ module.exports.createMovie = (req, res, next) => {
 
 module.exports.deleteMovie = (req, res, next) => {
   Movie.findById(req.params.movieId)
-    .then((card) => {
-      if (!card) {
+    .then((movie) => {
+      if (!movie) {
         throw new Error404(ERR_404);
       }
 
-      if (card.owner.toString() !== req.user._id) {
+      if (movie.owner.toString() !== req.user._id) {
         throw new Error403(ERR_403);
       }
 
       return Movie.findByIdAndRemove(req.params.movieId).select(['-createdAt']);
     })
-    .then((card) => res.send(card))
+    .then((movie) => res.send(movie))
     .catch((err) => {
       if (err.name === 'CastError') {
         return next(new Error400(ERR_400));
