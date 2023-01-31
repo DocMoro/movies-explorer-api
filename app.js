@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const bobeParser = require('body-parser');
 const { celebrate, Joi, errors } = require('celebrate');
 
 const { PORT = 3000 } = process.env;
@@ -16,9 +15,9 @@ const Error404 = require('./errors/error-404');
 const { ERR_500, ERR_404 } = require('./utils/constants');
 
 const app = express();
-app.use(bobeParser.json());
+app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
 });
 
