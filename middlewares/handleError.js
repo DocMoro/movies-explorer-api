@@ -1,4 +1,4 @@
-const { ERR_500 } = require('./utils/constants');
+const { ERR_500 } = require('../utils/constants');
 
 /* eslint no-unused-vars: ["error", { "args": "none" }] */
 
