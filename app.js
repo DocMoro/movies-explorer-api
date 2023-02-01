@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { celebrate, Joi, errors } = require('celebrate');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, MONGO_PORT = 27017, MONGO_IP = 'localhost' } = process.env;
 
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
@@ -18,7 +18,7 @@ const { ERR_500, ERR_404 } = require('./utils/constants');
 const app = express();
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+mongoose.connect(`mongodb://${MONGO_IP}:${MONGO_PORT}/bitfilmsdb`, {
   useNewUrlParser: true,
 });
 
