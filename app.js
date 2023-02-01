@@ -8,6 +8,7 @@ const { PORT = 3000, MONGO_PORT = 27017, MONGO_IP = 'localhost' } = process.env;
 const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limiter = require('./middlewares/limiter');
+const handleError = require('./middlewares/handleError');
 
 const Error404 = require('./errors/error-404');
 
@@ -42,17 +43,7 @@ app.use(errors());
 
 /* eslint no-unused-vars: ["error", { "args": "none" }] */
 
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-
-  res
-    .status(statusCode)
-    .send({
-      message: statusCode === 500
-        ? ERR_500
-        : message,
-    });
-});
+app.use(handleError);
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
