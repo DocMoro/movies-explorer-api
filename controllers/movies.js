@@ -7,7 +7,9 @@ const Error403 = require('../errors/error-403');
 const { ERR_404, ERR_400, ERR_403 } = require('../utils/constants');
 
 module.exports.getMovies = (req, res, next) => {
-  Movie.find({}).select(['-createdAt'])
+  const { _id } = req.user;
+
+  Movie.find({ owner: _id }).select(['-createdAt'])
     .then((movie) => res.send(movie))
     .catch(next);
 };
